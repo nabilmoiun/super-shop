@@ -1,12 +1,15 @@
 import json
 
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.template.loader import get_template
+from django.http import JsonResponse, HttpResponse
 
 from product.models import Product, Category
 from .models import OrderProduct, Order
 
+from xhtml2pdf import pisa
 from qr_code.qrcode.utils import ContactDetail
+
 
 
 def create_order(request):
@@ -46,18 +49,35 @@ def save_order(request):
     return JsonResponse({"message": "success", "status": 200}, safe=False)
 
 
-def order_details(request, order_id):
-    order = Order.objects.get(id=order_id)
+def total_orders(request):
+    orders = Order.objects.order_by('-order_date')
+    context = {
+        'orders': orders
+    }
+    return render(request, 'order/total_orders.html', context)
+
+
+def order_details(request, invoice_id):
+    order = get_object_or_404(Order, invoice_id=invoice_id)
+    template_path = 'order/order_details.html'
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="report.pdf"'
+    template = get_template(template_path)
     customer_information = ContactDetail(
         first_name=order.customer_name,
         last_name='',
         tel=order.phone,
         email=order.email
     )
-    qr_code_string = f"customer name: {order.customer_name} \n phone:  {order.phone} \n email: {order.email}"
+    qr_code_string = f"customer name: {order.customer_name}\nphone:  {order.phone}\nemail: {order.email}"
     context = {
         'order': order,
         'qr_code_string': qr_code_string,
         'customer_information': customer_information
     }
-    return render(request, 'order/order_details.html', context)
+    html = template.render(context)
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

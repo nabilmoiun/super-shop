@@ -11,6 +11,9 @@ class OrderProduct(models.Model):
     def __str__(self):
         return f"{self.product.name} x {self.quantity}"
 
+    def get_total_price(self):
+        return self.product.price * self.quantity
+
 
 class Order(models.Model):
     customer_name = models.CharField(max_length=150)
@@ -26,3 +29,9 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         self.invoice_id = uuid.uuid4().hex
         super(Order, self).save(*args, **kwargs)
+
+    def get_order_total_price(self):
+        total = 0
+        for product in self.products.all():
+            total += product.get_total_price()
+        return total
