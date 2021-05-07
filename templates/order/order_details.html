@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %} Create Order {% endblock title %}
+{% load static %}
+{% load qr_code %}
+{% block styles %}
+<style>
+    .fa-trash {
+        color: tomato;
+        cursor: pointer;
+        margin-left: 20px;
+    }
+</style>
+{% endblock styles %}
+{% block content %}
+<div class="container-fluid my-4">
+    <div class="row">
+        <div class="col-md-12">
+            {{order.customer_name}}
+            {{order.phone}}
+            {{order.email}}
+            {% for product in order.products.all %}
+            {{product.product.name}}
+            {% endfor %}
+        </div>
+        <div class="col-md-12">
+            <!-- {% qr_from_text qr_code_string size="m" image_format="png" error_correction="L" %} -->
+            {% qr_for_contact customer_information size='S' %}
+            
+        </div>
+    </div>
+{% endblock content %}

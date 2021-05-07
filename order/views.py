@@ -6,6 +6,8 @@ from django.http import JsonResponse
 from product.models import Product, Category
 from .models import OrderProduct, Order
 
+from qr_code.qrcode.utils import ContactDetail
+
 
 def create_order(request):
     products = Product.objects.all()
@@ -42,3 +44,20 @@ def save_order(request):
         order.products.add(orderd_product)
         order.save()
     return JsonResponse({"message": "success", "status": 200}, safe=False)
+
+
+def order_details(request, order_id):
+    order = Order.objects.get(id=order_id)
+    customer_information = ContactDetail(
+        first_name=order.customer_name,
+        last_name='',
+        tel=order.phone,
+        email=order.email
+    )
+    qr_code_string = f"customer name: {order.customer_name} \n phone:  {order.phone} \n email: {order.email}"
+    context = {
+        'order': order,
+        'qr_code_string': qr_code_string,
+        'customer_information': customer_information
+    }
+    return render(request, 'order/order_details.html', context)
