@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title  %} Home {% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-12 my-4">
+            <h2 class="text-monospace text-center">Super Shop Management</h2>
+        </div>
+        <hr>
+        <div class="col-md-4 my-4">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        Total Products
+                    </h3>
+                    <p class="card-text">
+                        View products in your shop
+                    </p>
+                    <a class="btn btn-primary" href="{% url 'product_list' %}">View Products</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 my-4">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        Total Categories
+                    </h3>
+                    <p class="card-text">
+                        View product categories
+                    </p>
+                    <a class="btn btn-primary" href="{% url 'category_list' %}">View Categories</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 my-4">
+            <div class="card h-100">
+                <div class="card-body bg-light">
+                    <h3 class="card-title">
+                        Total Orders
+                    </h3>
+                    <p class="card-text">
+                        View total number of orders in the shop
+                    </p>
+                    <a class="btn btn-primary" href="{% url 'total_orders' %}">View Orders</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 my-4">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        Add New Product
+                    </h3>
+                    <p class="card-text">
+                        Add new products to your shop
+                    </p>
+                    <a class="btn btn-primary" href="{% url 'add_product' %}">Add Product</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 my-4">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        Add Product Category
+                    </h3>
+                    <p class="card-text">
+                        Add new categories for the product
+                    </p>
+                    <a class="btn btn-primary" href="{% url 'add_category' %}">Add New Category</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 my-4">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        Create New Order
+                    </h3>
+                    <p class="card-text">
+                        Create new order for customer
+                    </p>
+                    <a class="btn btn-primary" href="{% url 'create_order' %}">Create Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

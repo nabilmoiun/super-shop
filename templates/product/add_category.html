@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %} Create Order {% endblock title %}
+{% load static %}
+
+{% block styles %}
+<style>
+    .errorlist {
+        padding-right: 0px;
+        padding-left: 0px;
+        padding-top: 10px;
+        margin: 0px;
+    }
+    .errorlist li {
+        list-style: none;
+        color: red;
+        font-size: large;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 my-3">
+            <h3 class="text-monospace text-center">Add New Category</h3>
+        </div>
+    </div>
+        <form class="row justify-content-center" method="POST" action="{% url 'add_category' %}" novalidate>
+            {% csrf_token %}
+            <div class="form-group col-md-8">
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {% for error in form.non_field_errors %}
+                  {{ error }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% if messages %}
+            <div class="form-group col-md-8">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {% for message in messages %}
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            <div class="form-group col-md-8">
+                <label for="name">Category Name*</label>
+                {{form.name}}
+                {{form.name.errors}}
+            </div>
+            <div class="form-group col-md-8">
+                <button type="submit" class="btn btn-dark">Add Category</button>
+            </div>
+        </form>
+
+{% endblock content %}

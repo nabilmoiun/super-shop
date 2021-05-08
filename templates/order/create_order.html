@@ -292,7 +292,7 @@
                     products.push(
                         {
                             "product_id": product.dataset.product,
-                            "quantity": product.dataset.quantity,
+                            "quantity": parseFloat(product.dataset.quantity),
                         })
                 }
                 order.push(customerInformation);

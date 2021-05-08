@@ -2,22 +2,14 @@
 {% block title %} Create Order {% endblock title %}
 {% load static %}
 {% load qr_code %}
-{% block styles %}
-<style>
-    .fa-trash {
-        color: tomato;
-        cursor: pointer;
-        margin-left: 20px;
-    }
-</style>
-{% endblock styles %}
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-12 my-4">
-            <h3 class="text-monospace text-center my-2">Total Orders</h3>
+            <h3 class="text-monospace text-center my-2">Order List</h3>
             {% if orders %}
-            <table class="table table-hover my-4">
+            <div class="table-responsive-md">
+              <table class="table table-hover my-4">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -39,6 +31,7 @@
                   {% endfor %}
                 </tbody>
               </table>
+            </div>
               {% else %}
             <h3 class="text-center my-4">No Orders</h3>
             {% endif %}
