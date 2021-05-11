@@ -4,7 +4,7 @@ from django.urls import path
 from .views import (
     add_product, update_product, delete_product,
     product_list, add_category, update_category,
-    category_list
+    category_list, search_products
 )
 
 urlpatterns = [
@@ -15,4 +15,5 @@ urlpatterns = [
     path('update_product/<str:slug>/', update_product, name='update_product'),
     path('delete_product/<int:id>/', delete_product, name='delete_product'),
     path('product_list/', product_list, name='product_list'),
+    path('search_products/<str:search_key>/', search_products, name='search_products'),
 ]

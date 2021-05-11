@@ -7,6 +7,16 @@
     <div class="row">
         <div class="col-md-12 my-4">
             <h3 class="text-monospace text-center my-2">Product List</h3>
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                {% endfor %}
+            {% endif %}
             {% if products %}
             <div class="table-responsive-md">
               <table class="table table-hover my-4">
@@ -18,10 +28,10 @@
                     <th scope="col">Price</th>
                     <th scope="col">Stock</th>
                     <th scope="col">Category</th>
-                    <th scope="col">Update</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="rootElement">
                     {% for product in products %}
                   <tr>
                     <th scope="row">{{forloop.counter}}</th>
@@ -30,8 +40,9 @@
                     <td>{{product.price}}</td>
                     <td>{{product.stock}} {{product.unit}}</td>
                     <td>{{product.category}}</td>
-                    <td>
-                        <a class="btn btn-dark" href="{% url 'update_product' product.slug %}">Update</a>
+                    <td class="d-flex flex-row justify-content-space">
+                        <a class="btn btn-dark px-1" href="{% url 'update_product' product.slug %}">Update</a>
+                        <a class="btn btn-danger px-1 ml-1" href="{% url 'delete_product' product.id %}">Delete</a>
                     </td>
                   </tr>
                   {% endfor %}
@@ -42,5 +53,41 @@
             <h3 class="text-center my-4">No Products</h3>
             {% endif %}
         </div>
+        <div class="col-md-12 my-4 text-center">
+          {% if products %}
+          <p class="pr-5" style="display: initial;">Total {{products.count}}</p>
+          {% endif %}
+          <div>
+            
+          </div>
+          <button class="btn btn-dark px-3" id="previousButton">Prev</button>
+          <button class="btn btn-dark px-3" id="nextButton">Next</button>
+          <select class="px-3" style="padding-bottom: 7px;" name="page" id="page">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+          </select>
+          <p class="pl-2" style="display: initial;">Per Page</p>
+        </div>
     </div>
 {% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/pagination.js' %}"></script>
+
+<script>
+
+  const paginate = new Paginate(
+  "rootElement",
+  "nextButton",
+  "previousButton",
+  "page",
+  1
+);
+paginate.run()
+
+</script>
+
+{% endblock scripts %}

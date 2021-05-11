@@ -1,15 +1,14 @@
 import json
 
-from django.shortcuts import render, get_object_or_404
 from django.template.loader import get_template
 from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, get_object_or_404
 
-from product.models import Product, Category
 from .models import OrderProduct, Order
+from product.models import Product, Category
 
 from xhtml2pdf import pisa
 from qr_code.qrcode.utils import ContactDetail
-
 
 
 def create_order(request):
@@ -46,7 +45,8 @@ def save_order(request):
         product.save()
         order.products.add(orderd_product)
         order.save()
-    return JsonResponse({"message": "success", "status": 200}, safe=False)
+    response = list(Order.objects.filter(id=order.id).values())
+    return JsonResponse(response[0], safe=False)
 
 
 def total_orders(request):

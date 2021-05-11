@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
 from django.db.models import Q
+from django.contrib import messages
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Category, Product
 from .forms import ProductForm, CategoryForm
@@ -111,4 +112,10 @@ def product_list(request):
     return render(request, 'product/product_list.html', context)
 
 
-
+def search_products(request, search_key):
+    products = list(Product.objects.filter(
+        Q(name__icontains=search_key) |
+        Q(code__icontains=search_key) |
+        Q(category__name__icontains=search_key)
+    ).values())
+    return JsonResponse(products, safe=False)

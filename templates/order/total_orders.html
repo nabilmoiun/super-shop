@@ -1,40 +1,74 @@
-{% extends 'base.html' %}
-{% block title %} Create Order {% endblock title %}
-{% load static %}
-{% load qr_code %}
-{% block content %}
+{% extends 'base.html' %} {% block title %} Create Order {% endblock title %} 
+
+{% load static %} {% load qr_code %} {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-12 my-4">
-            <h3 class="text-monospace text-center my-2">Order List</h3>
-            {% if orders %}
-            <div class="table-responsive-md">
-              <table class="table table-hover my-4">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Invoice Id</th>
-                    <th scope="col">Order Date</th>
-                    <th scope="col">Details</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    {% for order in orders %}
-                  <tr>
-                    <th scope="row">{{forloop.counter}}</th>
-                    <td>{{order.invoice_id}}</td>
-                    <td>{{order.order_date|date:'Y-m-d'}}</td>
-                    <td>
-                        <a class="btn btn-dark" href="{% url 'order_details' order.invoice_id %}">View Details</a>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-              {% else %}
-            <h3 class="text-center my-4">No Orders</h3>
-            {% endif %}
-        </div>
+  <div class="row">
+    <div class="col-md-12 my-4">
+      <h3 class="text-monospace text-center my-2">Order List</h3>
+      {% if orders %}
+      <div class="table-responsive-md" id="orderTable">
+        <table class="table table-hover my-4">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Invoice Id</th>
+              <th scope="col">Order Date</th>
+              <th scope="col">Details</th>
+            </tr>
+          </thead>
+          <tbody id="rootElement">
+            {% for order in orders %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{order.invoice_id}}</td>
+              <td>{{order.order_date|date:'Y-m-d'}}</td>
+              <td>
+                <a
+                  class="btn btn-dark"
+                  href="{% url 'order_details' order.invoice_id %}"
+                  target="_blank"
+                  >View Details</a
+                >
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <h3 class="text-center my-4">No Orders</h3>
+      {% endif %}
     </div>
-{% endblock content %}
+    <div class="col-md-12 my-4 text-center">
+      <button class="btn btn-dark px-3" id="previousButton">Prev</button>
+      <button class="btn btn-dark px-3" id="nextButton">Next</button>
+      <select class="px-3" style="padding-bottom: 7px;" name="page" id="page">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+      </select>
+      <p class="pl-2" style="display: initial;">Per page</p>
+    </div>
+  </div>
+  {% endblock content %} 
+  
+  {% block scripts %}
+  <script src="{% static 'js/pagination.js' %}"></script>
+
+  <script>
+
+    const paginate = new Paginate(
+    "rootElement",
+    "nextButton",
+    "previousButton",
+    "page",
+    5
+  );
+  paginate.run()
+
+  </script>
+
+  {% endblock scripts %}
+</div>
