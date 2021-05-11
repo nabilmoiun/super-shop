@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2n3wtr&4bx9e-7j)1qu+qw&8jxecs(v9*&5q3x6!#h6pymkhvv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['super-shop-nabil.herokuapp.com', '127.0.0.1', 'localhost']
 
