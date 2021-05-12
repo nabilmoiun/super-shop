@@ -96,5 +96,3 @@ server again by:
 
 You can now see the default django admin panel by going to the link ***localhost:8000/admin/*** enter the username and
 password you created for the super user and then you can see all the tables created for the app and its data.
-                                    
-                                                                    *Thank You*
