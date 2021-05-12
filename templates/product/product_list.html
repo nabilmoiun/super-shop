@@ -41,8 +41,8 @@
                     <td>{{product.stock}} {{product.unit}}</td>
                     <td>{{product.category}}</td>
                     <td class="d-flex flex-row justify-content-space">
-                        <a class="btn btn-dark px-1" href="{% url 'update_product' product.slug %}">Update</a>
-                        <a class="btn btn-danger px-1 ml-1" href="{% url 'delete_product' product.id %}">Delete</a>
+                        <a class="btn btn-dark px-2" href="{% url 'update_product' product.slug %}">Update</a>
+                        <a class="btn btn-danger px-2 ml-1" href="{% url 'delete_product' product.id %}">Delete</a>
                     </td>
                   </tr>
                   {% endfor %}
@@ -57,11 +57,8 @@
           {% if products %}
           <p class="pr-5" style="display: initial;">Total {{products.count}}</p>
           {% endif %}
-          <div>
-            
-          </div>
-          <button class="btn btn-dark px-3" id="previousButton">Prev</button>
-          <button class="btn btn-dark px-3" id="nextButton">Next</button>
+          <button class="btn btn-dark px-3" id="previousButton" disabled>Prev</button>
+          <button class="btn btn-dark px-3" id="nextButton" disabled>Next</button>
           <select class="px-3" style="padding-bottom: 7px;" name="page" id="page">
             <option value="5">5</option>
             <option value="10">10</option>
@@ -70,6 +67,11 @@
             <option value="25">25</option>
           </select>
           <p class="pl-2" style="display: initial;">Per Page</p>
+          <div class="row justify-content-center">
+            <div class="col-md-6 mt-4">
+              <a class="btn btn-block btn-outline-dark mb-2 px-2 btn-medium" href="{% url 'add_product' %}">Add New Product</a>
+            </div>
+          </div>
         </div>
     </div>
 {% endblock content %}

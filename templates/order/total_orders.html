@@ -27,7 +27,7 @@
                   class="btn btn-dark"
                   href="{% url 'order_details' order.invoice_id %}"
                   target="_blank"
-                  >View Details</a
+                  >Details in pdf</a
                 >
               </td>
             </tr>
@@ -40,8 +40,8 @@
       {% endif %}
     </div>
     <div class="col-md-12 my-4 text-center">
-      <button class="btn btn-dark px-3" id="previousButton">Prev</button>
-      <button class="btn btn-dark px-3" id="nextButton">Next</button>
+      <button class="btn btn-dark px-3" id="previousButton" disabled>Prev</button>
+      <button class="btn btn-dark px-3" id="nextButton" disabled>Next</button>
       <select class="px-3" style="padding-bottom: 7px;" name="page" id="page">
         <option value="5">5</option>
         <option value="10">10</option>

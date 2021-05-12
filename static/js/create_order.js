@@ -9,6 +9,7 @@ const productForm = document.getElementById("productForm");
 const productTable = document.getElementById("productTable");
 const orderTable = document.getElementById("orderTable");
 const orderForm = document.getElementById("orderForm");
+const orderButton = document.getElementById('orderButton');
 const customerName = document.getElementById("customer_name");
 const customerNameMessage = document.getElementById(
   "customer_name_validation_message"
@@ -307,6 +308,7 @@ function createOrder(event) {
 
 function saveOrder(orderData) {
   const url = `/save_order/`;
+  orderButton.setAttribute("disabled", true);
   fetch(url, {
     method: "POST",
     headers: {
@@ -320,8 +322,6 @@ function saveOrder(orderData) {
       return response.json();
     })
     .then((data) => {
-      console.log("response is : ", data);
-      console.log('complete');
       orderTable.innerHTML = "";
       orderForm.reset();
       if(orderConfirmationMessage.classList.contains('hide-message')) {
@@ -338,10 +338,11 @@ function saveOrder(orderData) {
       div.appendChild(viewLink);
       console.log(div);
       document.getElementById('message-div').appendChild(div);
+      orderButton.removeAttribute('disabled');
     })
     .catch((error) => {
       alert('Something went wrong');
-      console.log(error);
+      orderButton.removeAttribute('disabled');
     });
 }
 

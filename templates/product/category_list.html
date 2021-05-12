@@ -4,7 +4,7 @@
 {% load qr_code %}
 {% block content %}
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-md-12 my-4">
             <h3 class="text-monospace text-center my-2">Category List</h3>
             {% if categories %}
@@ -35,11 +35,12 @@
                     <td>
                         <form class="row" method="POST" action="{% url 'update_category' category.slug %}">
                             {% csrf_token %}
-                            <div class="form-group col-md-10">
+                            <div class="form-group col-md-8">
                                 <input class="form-control" type="text" name="name" value="{{category.name}}">
                             </div>
-                            <div class="form-group col-md-2">
-                                <button type="submit" class="btn btn-dark">Update</button>
+                            <div class="form-group col-md-4 d-flex justify-content-space">
+                                <button type="submit" class="btn btn-dark px-1">Update</button>
+                                <a class="btn btn-danger ml-1" href="{% url 'delete_category' category.id %}">Delete</a>
                             </div>
                         </form>
                     </td>
@@ -52,5 +53,8 @@
             <h3 class="text-center my-4">No Categories</h3>
             {% endif %}
         </div>
+          <div class="col-md-6 mt-4">
+            <a class="btn btn-block btn-outline-dark mb-2 px-2 btn-medium" href="{% url 'add_category' %}">Add New Category</a>
+          </div>
     </div>
 {% endblock content %}
