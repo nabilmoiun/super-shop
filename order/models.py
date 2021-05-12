@@ -21,6 +21,7 @@ class Order(models.Model):
     email = models.EmailField()
     products = models.ManyToManyField('OrderProduct', related_name='ordered_products')
     invoice_id = models.CharField(max_length=40, null=True, blank=True)
+    total = models.FloatField(null=True)
     order_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -29,9 +30,3 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         self.invoice_id = uuid.uuid4().hex
         super(Order, self).save(*args, **kwargs)
-
-    def get_order_total_price(self):
-        total = 0
-        for product in self.products.all():
-            total += product.get_total_price()
-        return total

@@ -30,6 +30,7 @@ def save_order(request):
     data = json.loads(request.body)
     customer = data[0]
     products = data[1]
+    total = 0
     order = Order.objects.create(
             customer_name=customer['customer_name'],
             phone=customer['phone'],
@@ -43,8 +44,11 @@ def save_order(request):
         )
         product.stock -= float(p['quantity'])
         product.save()
+        total += orderd_product.get_total_price()
         order.products.add(orderd_product)
         order.save()
+    order.total = total
+    order.save()
     response = list(Order.objects.filter(id=order.id).values())
     return JsonResponse(response[0], safe=False)
 
