@@ -41,13 +41,6 @@ def update_category(request, slug):
     return render(request, 'product/category_list.html', context)
 
 
-def delete_category(request, id):
-    category = get_object_or_404(Category, id=id)
-    category.delete()
-    messages.success(request, 'Category has been deleteted')
-    return redirect('category_list')
-
-
 def category_list(request):
     categories = Category.objects.order_by('-id')
     form = CategoryForm()

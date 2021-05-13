@@ -20,6 +20,7 @@ class Product(models.Model):
         ('Kg', 'Kg'),
         ('Litre', 'Litre'),
         ('Piece', 'Piece'),
+        ('Box', 'Box')
     )
     name = models.CharField(max_length=250)
     code = models.CharField(max_length=150)

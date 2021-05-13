@@ -57,7 +57,7 @@ function productList(key) {
       generateResultDom(data);
     })
     .catch(error => {
-      console.log(error);
+      alert('Something went wrong');
     })
   }
   else{
@@ -79,7 +79,6 @@ function generateResultDom(results) {
     displaySearchResults(ul);
   }
   else {
-    console.log('none');
     searchResults.innerHTML = '';
     searchResults.innerHTML = `<h5 class="text-monospace">No results</h5>`
     searchResults.style.display = "block";
@@ -95,8 +94,6 @@ function displaySearchResults(dom) {
 function setValue(product) {
   searchKey.value = product.name;
   searchKey.setAttribute('data-product', `${product.id}`);
-  console.log(searchKey.value);
-  console.log(searchKey.dataset.product);
   searchResults.innerHTML = '';
   searchResults.style.display = "none";
   getProductInformation(parseInt(searchKey.dataset.product));
@@ -118,7 +115,7 @@ function getProductInformation(product) {
       fillUpProductInformation(data[0]);
     })
     .catch((error) => {
-      console.log(error);
+      alert("Something went wrong");
     });
 }
 
@@ -161,7 +158,6 @@ function validatePrice(value) {
 
 function validateQuantity(value) {
   if (!quantity.value) {
-    console.log(quantity.value);
     quantityMessage.innerHTML = "";
     quantityMessage.innerHTML = "Please enter quantity";
     validatedData.quantiy = false;
@@ -193,7 +189,6 @@ function addProduct(event) {
       quantity: parseFloat(quantity.value),
       subtotal: parseFloat(price.value) * parseFloat(quantity.value),
     };
-    console.log(addedProduct);
     addProductToOrderTable(addedProduct);
     productForm.reset();
   } else {
@@ -258,14 +253,27 @@ function validateCustomerPhone() {
   }
 }
 
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
 function validateCustomerEmail() {
   if (!customerEmail.value) {
     customerEmailMessage.innerHTML = "";
     customerEmailMessage.innerHTML = "Please enter customer email address";
     validatedOrderData.email = false;
-  } else {
-    customerEmailMessage.innerHTML = "";
-    validatedOrderData.email = true;
+  }
+  else{
+    if(!validateEmail(customerEmail.value)) {
+      customerEmailMessage.innerHTML = "";
+      customerEmailMessage.innerHTML = "Please enter a valid email address";
+      validatedOrderData.email = false;
+    }
+    else {
+      customerEmailMessage.innerHTML = "";
+      validatedOrderData.email = true;
+    }
   }
 }
 
@@ -301,7 +309,7 @@ function createOrder(event) {
 
       saveOrder(JSON.stringify(order));
     } else {
-      console.log("something went wrong");
+      event.preventDefault();
     }
   }
 }
@@ -328,7 +336,6 @@ function saveOrder(orderData) {
         orderConfirmationMessage.classList.remove('hide-message');
       }
       orderConfirmationMessage.classList.add('show-message');
-      console.log('completing style');
       let div = document.createElement('div');
       div.setAttribute('class', 'view-order');
       let viewLink = document.createElement('a');
@@ -336,7 +343,6 @@ function saveOrder(orderData) {
       let viewText = document.createTextNode('View Order');
       viewLink.appendChild(viewText);
       div.appendChild(viewLink);
-      console.log(div);
       document.getElementById('message-div').appendChild(div);
       orderButton.removeAttribute('disabled');
     })
