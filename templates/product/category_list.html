@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} Create Order {% endblock title %}
+{% block title %} Category List {% endblock title %}
 {% load static %}
 {% load qr_code %}
 {% block content %}
@@ -35,12 +35,11 @@
                     <td>
                         <form class="row" method="POST" action="{% url 'update_category' category.slug %}">
                             {% csrf_token %}
-                            <div class="form-group col-md-8">
+                            <div class="form-group col-md-10">
                                 <input class="form-control" type="text" name="name" value="{{category.name}}">
                             </div>
-                            <div class="form-group col-md-4 d-flex justify-content-space">
-                                <button type="submit" class="btn btn-dark px-1">Update</button>
-                                <a class="btn btn-danger ml-1" href="{% url 'delete_category' category.id %}">Delete</a>
+                            <div class="form-group col-md-2">
+                                <button type="submit" class="btn btn-dark px-4">Update</button>
                             </div>
                         </form>
                     </td>
