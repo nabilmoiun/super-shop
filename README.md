@@ -26,7 +26,7 @@ Features
 Deployment
 =============
 
-The app is deployed on heroku. You can view the system running live on this link [View Project Live] (https://super-shop-nabil.herokuapp.com/)
+The app is deployed on heroku. You can view the system running live on this link [View Project Live](https://super-shop-nabil.herokuapp.com/)
 
 Running Locally
 ===================
