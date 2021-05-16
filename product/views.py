@@ -105,7 +105,7 @@ def delete_product(request, id):
 
 
 def product_list(request):
-    products = Product.objects.all()
+    products = Product.objects.order_by('-id')
     context = {
         'products': products
     }
